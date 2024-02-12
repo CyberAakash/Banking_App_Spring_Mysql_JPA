@@ -26,7 +26,7 @@ public class AccountController {
         return new ResponseEntity<>(accountService.createAccount(accountDto), HttpStatus.CREATED);
     }
 
-    //Get Account REST API
+    //Get Account By ID REST API
     @GetMapping("/{id}")
     public ResponseEntity<AccountDto> getAccountById(@PathVariable Long id) {
         AccountDto accountDto = accountService.getAccountById(id);
@@ -43,6 +43,7 @@ public class AccountController {
         return ResponseEntity.ok(accountDto);
     }
 
+    //Withdraw Amount REST API
     @PutMapping("/{id}/withdraw")
     public ResponseEntity<AccountDto> withdraw(@PathVariable Long id,
                                               @RequestBody Map<String,Double> request) {
@@ -51,15 +52,24 @@ public class AccountController {
         return ResponseEntity.ok(accountDto);
     }
 
+    //Fetch All Accounts REST API
     @GetMapping
     public ResponseEntity<List<AccountDto>> getAllAccounts() {
         List<AccountDto> accounts = accountService.getAllDetails();
         return ResponseEntity.ok(accounts);
     }
 
+    //Delete Account By ID REST API
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteAccount(@PathVariable Long id) {
         accountService.deleteAccount(id);
         return ResponseEntity.ok("Account Deleted Successfully");
+    }
+
+    //Delete Account By ID REST API
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteAll() {
+        accountService.deleteAllAccounts();
+        return ResponseEntity.ok("All Accounts Deleted Successfully");
     }
 }

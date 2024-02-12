@@ -72,6 +72,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public void deleteAllAccounts() {
+        accountRepository.deleteAll();
+    }
+
+    @Override
     public List<AccountDto> getAllDetails() {
         List<Account> accounts = accountRepository.findAll();
         return accounts.stream().map((account) -> AccountMapper.mapToAccountDto(account))

@@ -12,5 +12,6 @@ public interface AccountService {
     void deleteAccount(Long id);
     void deleteAllAccounts();
     List<AccountDto> getAllDetails();
+    List<AccountDto> getAccountWithBalanceNotZero();
 
 }

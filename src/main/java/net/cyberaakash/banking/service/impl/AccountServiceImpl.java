@@ -1,5 +1,6 @@
 package net.cyberaakash.banking.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import net.cyberaakash.banking.dto.AccountDto;
 import net.cyberaakash.banking.entity.Account;
 import net.cyberaakash.banking.mapper.AccountMapper;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 
 import static java.util.Arrays.stream;
 
+@Slf4j
 @Service
 public class AccountServiceImpl implements AccountService {
 
@@ -25,6 +27,7 @@ public class AccountServiceImpl implements AccountService {
     public AccountDto createAccount(AccountDto accountDto) {
         Account account = AccountMapper.mapToAccount(accountDto);
         Account savedAccount = accountRepository.save(account);
+        log.info("saveaccount:{}",savedAccount);
         return AccountMapper.mapToAccountDto(savedAccount);
     }
 
@@ -79,6 +82,13 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public List<AccountDto> getAllDetails() {
         List<Account> accounts = accountRepository.findAll();
+        return accounts.stream().map((account) -> AccountMapper.mapToAccountDto(account))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<AccountDto> getAccountWithBalanceNotZero() {
+        List<Account> accounts = accountRepository.balNotZero();
         return accounts.stream().map((account) -> AccountMapper.mapToAccountDto(account))
                 .collect(Collectors.toList());
     }

@@ -30,7 +30,8 @@ public class AccountController {
     @GetMapping("/{id}")
     public ResponseEntity<AccountDto> getAccountById(@PathVariable Long id) {
         AccountDto accountDto = accountService.getAccountById(id);
-        return ResponseEntity.ok(accountDto);
+//        return ResponseEntity.ok(accountDto);
+        return  new ResponseEntity<>(accountDto,HttpStatus.OK);
     }
 
 
@@ -71,5 +72,12 @@ public class AccountController {
     public ResponseEntity<String> deleteAll() {
         accountService.deleteAllAccounts();
         return ResponseEntity.ok("All Accounts Deleted Successfully");
+    }
+
+    //Get Account with Balance Not Zero
+    @GetMapping("/balNotZero")
+    public ResponseEntity<List<AccountDto>> getAccountsWithBalanceNotZero() {
+        List<AccountDto> accounts = accountService.getAccountWithBalanceNotZero();
+        return ResponseEntity.ok(accounts);
     }
 }
